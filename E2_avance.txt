@@ -1,0 +1,15 @@
+Avances de juego
+Participantes:                                                                                                      sección 3
+•	Jean Torrealba 
+•	Renato Umaña
+•	Manuel Urzua 
+•	Benjamín 
+•	Cristobal Yáñez
+
+
+Mecánicas añadidas:
+•	mecánica de objetivo de manzanas:
+esta mecánica nos permite que el usuario puede tener una mayor interacción en el juego permitiéndose así tratar de llegar al objetivo planteado.
+
+•	mecánica de obstáculos múltiples: 
+esta mecánica le permite al usuario interactuar con una dificulta mayor a la hora de jugar logrando así obtener un reto mayor para alcanzar la meta.
