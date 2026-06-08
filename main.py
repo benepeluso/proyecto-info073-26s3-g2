@@ -36,7 +36,7 @@ MANZANA = 3*2
 FILAS = 15
 COLUMNAS = 15
 #configuracion de obstaculos 
-CANT_OBSTACULOS=10
+CANT_OBSTACULOS=15
 # Cuantas manzanas se deben comer para ganar
 MANZANAS_PARA_GANAR = 5
 
@@ -129,6 +129,7 @@ def refrescar_tablero(screen, tablero):
     # Rellena la pantalla con el color gris, básicamente pintando
     # por encima de lo que estaba anteriormente.
     screen.fill("gray30")
+  
 
     # Podemos calcular el tamaño en pixeles que tendrá cada
     # casilla al dividir tanto la altura de la pantalla (screen.get_height())
