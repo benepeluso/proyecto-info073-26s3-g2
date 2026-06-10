@@ -16,10 +16,10 @@ DIR_PANTALLAS = os.path.join(os.path.dirname(__file__), "data", "pantallas")
 
 # Se específica el nombre del archivo para cada imagen de pantalla.
 # El formato de imagen utilizado puede ser PNG, JPG/JPEG, BMP, o GIF.
-PANTALLA_INICIO = "pantalla_inicio.bmp"
+PANTALLA_INICIO = "inicio.png"
 PANTALLA_INSTRUCCIONES = "pantalla_instrucciones.bmp"
-PANTALLA_VICTORIA = "pantalla_victoria.bmp"
-PANTALLA_DERROTA = "pantalla_derrota.bmp"
+PANTALLA_VICTORIA = "victoria.png"
+PANTALLA_DERROTA = "eliminacion.png"
 
 # Para evitar que el jugador se mueva demasiado rápido
 RETRASO = 200
@@ -129,6 +129,8 @@ def refrescar_tablero(screen, tablero):
     # Rellena la pantalla con el color gris, básicamente pintando
     # por encima de lo que estaba anteriormente.
     screen.fill("gray30")
+    
+    bloque= pygame.image.load("assets/blocks/bloque.jpg").convert()
   
 
     # Podemos calcular el tamaño en pixeles que tendrá cada
