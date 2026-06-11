@@ -128,9 +128,12 @@ def refrescar_tablero(screen, tablero):
 
     # Rellena la pantalla con el color gris, básicamente pintando
     # por encima de lo que estaba anteriormente.
-    screen.fill("gray30")
-    
-    bloque= pygame.image.load("assets/blocks/bloque.jpg").convert()
+    #screen.fill("gray30")
+    fondo=pygame.image.load("assets/elements/fondos/castillo (2).png").convert()
+    screen.blit(fondo, (-8, 2))
+
+
+    #bloque= pygame.image.load("bloques/bloque.jpg").convert()
   
 
     # Podemos calcular el tamaño en pixeles que tendrá cada
