@@ -159,7 +159,7 @@ def refrescar_tablero(screen, tablero):
                 # de tamaño (ancho_elem, alto_elem) y color negro.
                 pygame.draw.rect(
                     screen,
-                    "black",
+                    "white",
                     pygame.Rect((pos_x, pos_y), (ancho_elem, alto_elem)),
                 )
             elif tablero[i][j] == JUGADOR:
