@@ -36,7 +36,7 @@ MANZANA = 3
 FILAS = 15
 COLUMNAS = 15
 #configuracion de obstaculos 
-CANT_OBSTACULOS=80
+CANT_OBSTACULOS=25
 # Cuantas manzanas se deben comer para ganar
 MANZANAS_PARA_GANAR = 5
 
