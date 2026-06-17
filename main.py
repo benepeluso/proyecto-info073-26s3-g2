@@ -26,9 +26,9 @@ RETRASO = 200
 
 # Códigos de cada elemento del tablero
 VACIO = 0
-OBSTACULO = 67
+OBSTACULO = 1
 JUGADOR = 2
-MANZANA = 3*2
+MANZANA = 3
 
 # Tamaño del tablero
 # Si se cambian estas constantes, se debe modificar la definición
@@ -36,7 +36,7 @@ MANZANA = 3*2
 FILAS = 15
 COLUMNAS = 15
 #configuracion de obstaculos 
-CANT_OBSTACULOS=15
+CANT_OBSTACULOS=80
 # Cuantas manzanas se deben comer para ganar
 MANZANAS_PARA_GANAR = 5
 
