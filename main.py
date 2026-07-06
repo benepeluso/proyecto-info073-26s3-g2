@@ -29,6 +29,8 @@ VACIO = 0
 OBSTACULO = 1
 JUGADOR = 2
 MANZANA = 3
+ENEMIGO=4
+SERPIENTE=2
 
 # Tamaño del tablero
 # Si se cambian estas constantes, se debe modificar la definición
@@ -37,6 +39,9 @@ FILAS = 15
 COLUMNAS = 15
 #configuracion de obstaculos 
 CANT_OBSTACULOS=25
+CANT_ENEMIGO:3
+#cuanto enemigos apareceran
+RETRASO_ENEMIGOS=300
 # Cuantas manzanas se deben comer para ganar
 MANZANAS_PARA_GANAR = 5
 
@@ -130,6 +135,7 @@ def refrescar_tablero(screen, tablero):
     # por encima de lo que estaba anteriormente.
     #screen.fill("gray30")
     fondo=pygame.image.load("assets/elements/fondos/castillo (2).png").convert()
+    enemigo=pygame.image.load("assets/elements/fondos/duende.png").convert_alpha()
 
     screen.blit(fondo, (0,0))
 
@@ -182,7 +188,8 @@ def refrescar_tablero(screen, tablero):
                         (ancho_elem - 20, alto_elem - 20),
                     ),
                 )
-
+            elif tablero[i][j]== ENEMIGO:
+                screen.blit(enemigo,[pos_x,pos_y])
             # Estamos recorriendo los píxeles de la pantalla, por lo que
             # debemos sumar el ancho y altura en pixeles de cada elemento que
             # ya hayamos recorrido para avanzar al siguiente.
@@ -366,7 +373,23 @@ def mostrar_pantalla(screen, nombre_archivo):
         pygame.display.flip()
         print(f"Advertencia: No se encontró la imagen {ruta}")
 
-
+def obtener_direccion_aleatoria():
+    return random.choice([(0,-1),(0,1),(-1,0),(1,0)])
+def avanzar_enemigos(tablero,pos_enemigo):
+    for i in range(len(pos_enemigos)):
+        pos_enemigos=pos_enemigos[i]
+        col, fila=pos_enemigos
+        dir_col, dir_fila=obtener_direccion_aleatoria()
+        nueva_col=col + dir_col
+        nueva_fila=fila+dir_fila
+        if 0 <= nueva_col< COLUMNAS and 0<= nueva_fila < FILAS:
+            if tablero[nueva_fila][nueva_col]==VACIO:
+                tablero[fila][col]=VACIO
+                tablero[nueva_fila][nueva_col]= ENEMIGO
+                pos_enemigo[i]=(nueva_col, nueva_fila)
+        elif tablero[nueva_fila][nueva_col]==SERPIENTE:
+            return"derrota, pos_enemigos"
+    return "ok", pos_enemigo
 def main():
     pygame.init()
 
