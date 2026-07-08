@@ -22,7 +22,7 @@ PANTALLA_VICTORIA = "victoria.png"
 PANTALLA_DERROTA = "eliminacion.png"
 
 # Para evitar que el jugador se mueva demasiado rápido
-RETRASO = 120
+RETRASO = 200
 
 # Códigos de cada elemento del tablero
 VACIO = 0
@@ -30,7 +30,7 @@ OBSTACULO = 1
 JUGADOR = 2
 MANZANA = 3
 ENEMIGO=4
-
+sprite_jugador = None
 
 # Tamaño del tablero
 # Si se cambian estas constantes, se debe modificar la definición
@@ -41,7 +41,7 @@ COLUMNAS = 15
 CANT_OBSTACULOS=25
 CANT_ENEMIGO=3
 #cuanto enemigos apareceran
-RETRASO_ENEMIGOS=300
+RETRASO_ENEMIGOS=200
 # Cuantas manzanas se deben comer para ganar
 MANZANAS_PARA_GANAR = 5
 
@@ -134,13 +134,14 @@ def refrescar_tablero(screen, tablero):
     # Rellena la pantalla con el color gris, básicamente pintando
     # por encima de lo que estaba anteriormente.
     #screen.fill("gray30")
-    
+    global sprite_jugador
+
     enemigo = pygame.image.load("assets/elements/fondos/duende.png").convert_alpha()
     enemigo = pygame.transform.scale(enemigo, (40, 40))
     bloque=pygame.image.load("assets/elements/fondos/obs.png").convert_alpha()
     fondo = pygame.image.load("assets/elements/fondos/castillo (2).png").convert()
     fondo = pygame.transform.scale(fondo, screen.get_size())
-
+    
     screen.blit(fondo, (0,0))
     alto_elem = screen.get_height() / FILAS
     ancho_elem = screen.get_width() / COLUMNAS
@@ -180,13 +181,12 @@ def refrescar_tablero(screen, tablero):
                 screen.blit(bloque, (pos_x, pos_y))
 
             elif tablero[i][j] == JUGADOR:
-                # Dibujamos un círculo verde en la posición (pos_x + radio, pos_y + radio),
-                # con un radio definido por la variable "radio" (ancho_elem / 2).
-                pygame.draw.circle(
-                    screen,
-                    "green",
-                    (pos_x + radio, pos_y + radio),
-                    radio,
+                screen.blit(
+                    sprite_jugador,
+                    (
+                        pos_x + (ancho_elem-40)/2,
+                        pos_y + (alto_elem-40)/2
+                    )
                 )
             elif tablero[i][j] == MANZANA:
                 pygame.draw.rect(
@@ -358,9 +358,12 @@ def reiniciar():
 
     poblar_tablero(tablero)
     pos_enemigos=[]
-    
-    for _ in range (CANT_ENEMIGO):
-        pos_enemigos.append(aparecer_aleatorio(tablero, ENEMIGO))
+
+    for _ in range(CANT_ENEMIGO):
+        posicion = aparecer_aleatorio(tablero, ENEMIGO, incluir_borde=False)
+
+        if posicion != (-1, -1):
+            pos_enemigos.append(posicion)
 
     # Colocamos al jugador en una posición aleatoria.
     pos_jugador = aparecer_aleatorio(tablero, JUGADOR)
@@ -397,6 +400,8 @@ def obtener_direccion_aleatoria():
     return random.choice([(0,-1),(0,1),(-1,0),(1,0)])
 def avanzar_enemigos(tablero,pos_enemigo):
     for i in range(len(pos_enemigo)):
+        if pos_enemigo[i] == (-1, -1):
+            continue
         col, fila = pos_enemigo[i]
         dir_col, dir_fila=obtener_direccion_aleatoria()
         nueva_col=col + dir_col
@@ -413,10 +418,24 @@ def avanzar_enemigos(tablero,pos_enemigo):
             pos_enemigo[i] = (nueva_col, nueva_fila)
     return "ok", pos_enemigo
 def main():
+
+    global sprite_jugador
     pygame.init()
 
     # Establecemos la resolución de la pantalla.
     screen = pygame.display.set_mode((800, 800))
+
+    caballero_abajo = pygame.image.load("assets/elements/fondos/CAB.png").convert_alpha()
+    caballero_arriba = pygame.image.load("assets/elements/fondos/CARR.png").convert_alpha()
+    caballero_izquierda = pygame.image.load("assets/elements/fondos/CIZ.png").convert_alpha()
+    caballero_derecha = pygame.image.load("assets/elements/fondos/CIZ.png").convert_alpha()
+    caballero_abajo = pygame.transform.scale(caballero_abajo, (80,80))
+    caballero_arriba = pygame.transform.scale(caballero_arriba, (80,80))
+    caballero_izquierda = pygame.transform.scale(caballero_izquierda, (80,80))
+    caballero_derecha = pygame.transform.scale(caballero_derecha, (80,80))
+
+
+    sprite_jugador = caballero_abajo
 
     # Establecemos el título de la ventana.
     pygame.display.set_caption("Juego Básico")
@@ -482,6 +501,17 @@ def main():
         # Leer teclado continuamente
             keys = pygame.key.get_pressed()
             direccion = cambiar_direccion(keys, direccion)
+
+            if direccion == (0, 1):
+                sprite_jugador = caballero_abajo
+
+            elif direccion == (0, -1):
+                sprite_jugador = caballero_arriba
+            elif direccion == (-1, 0):
+                sprite_jugador = caballero_izquierda
+
+            elif direccion == (1, 0):
+                sprite_jugador = caballero_derecha
 
             tiempo_actual = pygame.time.get_ticks()
             tiempo_actual_enemigo = pygame.time.get_ticks()
